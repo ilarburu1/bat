@@ -33,7 +33,7 @@
             let kontra2 = pass1.value;
             pass1.setCustomValidity("");
 
-            if (kontra!=kontra2) {
+            if (pass!=kontra2) {
                 pass1.setCustomValidity("Pasahitzek berdinak izan behar dute.");
                 bidaltzekoOK2 = false;
             }
@@ -41,35 +41,78 @@
             return bidaltzekoOK2;
         }
 
-        let checkPass = () => {
+        let checkCity = () => {
             
-            let bidaltzekoOK2 = true;
+            let bidaltzekoOK3 = true;
 
-            let pass = document.getElementById("password").value;
+            let city = document.getElementById("city")
+            let herria=city.value;
+            city.setCustomValidity("");
 
-            let pass1 = document.getElementById("confirmPassword");
-            let kontra2 = pass1.value;
-            pass1.setCustomValidity("");
-
-            if (kontra!=kontra2) {
-                pass1.setCustomValidity("Pasahitzek berdinak izan behar dute.");
-                bidaltzekoOK2 = false;
+            if (herria.length<3) {
+                city.setCustomValidity("Herriaren izenak gutxienez hiru karaktere izan behar ditu.");
+                bidaltzekoOK3 = false;
             }
 
-            return bidaltzekoOK2;
+            return bidaltzekoOK3;
+        }
+
+        let checkCode = () => {
+            
+            let bidaltzekoOK4 = true;
+
+            let code = document.getElementById("zipCode")
+            let kodea=code.value;
+            code.setCustomValidity("");
+
+            if (isNaN(kodea)) {
+                code.setCustomValidity("Zip kodeak zenbaki bat izan behar du.");
+                bidaltzekoOK4 = false;
+            }
+
+            return bidaltzekoOK4;
         }
 
         window.onload = () => {
             document.getElementById("email").oninput=checkEmail;
-            document.getElementById("password").oninput=checkPass;
-            document.getElementById("confirm password");
-            document.getElementById("date");
-            document.getElementById("address");
-            document.getElementById("city");
-            document.getElementById("zipCode");
+            document.getElementById("confirmPassword").oninput=checkPass;
+            document.getElementById("city").oninput=checkCity;
+            document.getElementById("zipCode").oninput=checkCode;
             document.querySelector("#formularioa").addEventListener("submit", (e) => {
                 e.preventDefault();
-                if (checkEmail()&&checkPass()) e.target.submit();
+                if (checkEmail()&&checkPass()&&checkCity()&&checkCode()){
+                    e.target.submit();
+                    const name = document.getElementById("name").value;
+                    const email = document.getElementById("email").value;
+                    const password = document.getElementById("password").value;
+                    const confirmPassword = document.getElementById("confirmPassword").value;
+                    const gender = document.getElementById("gender").value;
+                    const date = document.getElementById("date").value;
+                    const address = document.getElementById("address").value;
+                    const city = document.getElementById("city").value;
+                    const zipCode = document.getElementById("zipCode").value;
+                    const conditions = document.querySelector("input[name='conditions']").checked;
+                    const newsletter = document.querySelector("input[name='aukera']:checked").value;
+
+                    const mezua = `
+                    name: ${name}
+                    email: ${email}
+                    password: ${password}
+                    confirm-password: ${confirmPassword}
+                    gender: ${gender}
+                    dob: ${date}
+                    address: ${address}
+                    city: ${city}
+                    zip: ${zipCode}
+                    agree: ${conditions ? 'Sí' : 'No'}
+                    newsletter: ${newsletter}
+                    `;
+
+                document.getElementById("resultado").innerHTML = mensaje;
+
+                }
+
+
             });
 
         };
@@ -83,16 +126,17 @@
         Confirm password: <input type="password" name="confirmPassword" id="confirmPassword" required> <br>
         Gender: 
         <select name="gender" id="gender">
-        <option value="Male">Male</option>option>
-        <option value="Female">Female</option>option>
-        <option value="Other">Other</option>option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
         </select><br>
         Date of birth: <input type="date" name="date" id="date" required> <br>
         Address: <textArea name="address" rows="3" cols="50" id="address"> </textArea><br>
-        City: <input type="text" name="city" id="city"> <br>
+        City: <input type="text" name="city" id="city" required> <br>
         Zip code: <input type="text" name="zipCode" id="zipCode" required> <br>
         I agree to the terms and conditions: <input type="checkbox" name="conditions" required> <br>
-        I want to recive the newsletter: <input type="radio" name=[yes,no] required> <br>
+        I want to recive the newsletter: <input type="radio" name="aukera" value="Yes" required> Yes
+        <input type="radio" name="aukera" value="No" required> No <br>
         <input type="submit" value="Submit">
     </form>
     
