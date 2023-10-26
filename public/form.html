@@ -2,23 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+
+        let checkEmail = () => {
+            
+            let bidaltzekoOK = true;
+
+            let emaila = document.getElementById("email");
+            let korreoa = emaila.value;
+            emaila.setCustomValidity("");
+
+            let emailaRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (emailaRegex.test(korreoa)) {
+            }else{
+                emaila.setCustomValidity("Hori ez da emila.");
+                bidaltzekoOK = false;
+            }
+
+            return bidaltzekoOK;
+        }
+
+        let checkPass = () => {
+            
+            let bidaltzekoOK2 = true;
+
+            let pass = document.getElementById("password").value;
+
+            let pass1 = document.getElementById("confirmPassword");
+            let kontra2 = pass1.value;
+            pass1.setCustomValidity("");
+
+            if (kontra!=kontra2) {
+                pass1.setCustomValidity("Pasahitzek berdinak izan behar dute.");
+                bidaltzekoOK2 = false;
+            }
+
+            return bidaltzekoOK2;
+        }
+
+        let checkPass = () => {
+            
+            let bidaltzekoOK2 = true;
+
+            let pass = document.getElementById("password").value;
+
+            let pass1 = document.getElementById("confirmPassword");
+            let kontra2 = pass1.value;
+            pass1.setCustomValidity("");
+
+            if (kontra!=kontra2) {
+                pass1.setCustomValidity("Pasahitzek berdinak izan behar dute.");
+                bidaltzekoOK2 = false;
+            }
+
+            return bidaltzekoOK2;
+        }
+
+        window.onload = () => {
+            document.getElementById("email").oninput=checkEmail;
+            document.getElementById("password").oninput=checkPass;
+            document.getElementById("confirm password");
+            document.getElementById("date");
+            document.getElementById("address");
+            document.getElementById("city");
+            document.getElementById("zipCode");
+            document.querySelector("#formularioa").addEventListener("submit", (e) => {
+                e.preventDefault();
+                if (checkEmail()&&checkPass()) e.target.submit();
+            });
+
+        };
+    </script>
 </head>
 <body>
-    <form action="/bezeroa" method="POST">
-        Name: <input type="text" name="name"> <br>
-        Email: <input type="text" name="email"> <br>
-        Password: <input type="text" name="password"> <br>
-        Confirm password: <input type="text" name="confirm password"> <br>
-        Gender: <input type="select" name="gender"> <br>
-        Date of birth: <input type="date" name="date"> <br>
-        Address: <input type="textArea" name="address"> <br>
-        City: <input type="text" name="city"> <br>
-        Zip code: <input type="text" name="zipCode"> <br>
-        I agree to the terms and conditions: <input type="checkbox" name="conditions"> <br>
-        I want to recive the newsletter: <input type="radio" name=[yes,no]> <br>
+    <form action="/bezeroa" method="POST" id="formularioa">
+        Name: <input type="text" name="name" id="name" required> <br>
+        Email: <input type="text" name="email" id="email" required> <br>
+        Password: <input type="password" name="password" id="password" required> <br>
+        Confirm password: <input type="password" name="confirmPassword" id="confirmPassword" required> <br>
+        Gender: 
+        <select name="gender" id="gender">
+        <option value="Male">Male</option>option>
+        <option value="Female">Female</option>option>
+        <option value="Other">Other</option>option>
+        </select><br>
+        Date of birth: <input type="date" name="date" id="date" required> <br>
+        Address: <textArea name="address" rows="3" cols="50" id="address"> </textArea><br>
+        City: <input type="text" name="city" id="city"> <br>
+        Zip code: <input type="text" name="zipCode" id="zipCode" required> <br>
+        I agree to the terms and conditions: <input type="checkbox" name="conditions" required> <br>
+        I want to recive the newsletter: <input type="radio" name=[yes,no] required> <br>
         <input type="submit" value="Submit">
-        </form>
+    </form>
+    
 </body>
 </html>
